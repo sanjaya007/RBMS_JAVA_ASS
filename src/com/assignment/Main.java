@@ -19,7 +19,7 @@ public class Main {
         String[] booking1 = {"", "", "", "", ""};
         String[] booking2 = {"", "", "", "", ""};
         String[] booking3 = {"", "", "", "", ""};
-        int[] lessonArr = new int[] {0, 0, 0};
+        int[] lessonArr = {0, 0, 0};
 
 
 //      heading
@@ -115,11 +115,7 @@ public class Main {
                 bookingArr[i] = "";
             }
 
-//            System.out.println(Arrays.toString(booking1));
-//            System.out.println(Arrays.toString(booking2));
-//            System.out.println(Arrays.toString(booking3));
             System.out.println("");
-
             counter++;
         }
 
@@ -134,7 +130,79 @@ public class Main {
         lessonArr[1] = Integer.parseInt(booking2[1]);
         lessonArr[2] = Integer.parseInt(booking3[1]);
 
-        System.out.println(Arrays.toString(lessonArr));
+        Arrays.sort(lessonArr);
+        int maxLesson = lessonArr[MAX_Count - 1];
+        int minLesson = lessonArr[0];
+
+        if (lessonArr[0] == lessonArr[1] && lessonArr[0] == lessonArr[2]){
+            System.out.println("All have same number of " + lessonArr[0] + " lessons");
+        }else{
+            String maxLessonStr = String.valueOf(maxLesson);
+            String minLessonStr = String.valueOf(minLesson);
+            String maxLessonHolder = "";
+            String minLessonHolder = "";
+            boolean isPluralMaxHolders = false;
+            boolean isPluralMinHolders = false;
+
+//          checking max lesson holder
+            if (Arrays.stream(booking1).anyMatch(maxLessonStr::equals)){
+                if (maxLessonHolder.equals("")){
+                    maxLessonHolder = booking1[0];
+                }else{
+                    maxLessonHolder += " and " + booking1[0];
+                    isPluralMaxHolders = true;
+                }
+            }
+
+            if (Arrays.stream(booking2).anyMatch(maxLessonStr::equals)){
+                if (maxLessonHolder.equals("")){
+                    maxLessonHolder = booking2[0];
+                }else{
+                    maxLessonHolder += " and " + booking2[0];
+                    isPluralMaxHolders = true;
+                }
+            }
+
+            if (Arrays.stream(booking3).anyMatch(maxLessonStr::equals)){
+                if (maxLessonHolder.equals("")){
+                    maxLessonHolder = booking3[0];
+                }else{
+                    maxLessonHolder += " and " + booking3[0];
+                    isPluralMaxHolders = true;
+                }
+            }
+
+//          checking min lesson holder
+            if (Arrays.stream(booking1).anyMatch(minLessonStr::equals)){
+                if (minLessonHolder.equals("")){
+                    minLessonHolder = booking1[0];
+                }else{
+                    minLessonHolder += " and " + booking1[0];
+                    isPluralMinHolders = true;
+                }
+            }
+
+            if (Arrays.stream(booking2).anyMatch(minLessonStr::equals)){
+                if (minLessonHolder.equals("")){
+                    minLessonHolder = booking2[0];
+                }else{
+                    minLessonHolder += " and " + booking2[0];
+                    isPluralMinHolders = true;
+                }
+            }
+
+            if (Arrays.stream(booking3).anyMatch(minLessonStr::equals)){
+                if (minLessonHolder.equals("")){
+                    minLessonHolder = booking3[0];
+                }else{
+                    minLessonHolder += " and " + booking3[0];
+                    isPluralMinHolders = true;
+                }
+            }
+
+            System.out.println(minLessonHolder + grammarInit(isPluralMinHolders) + " the minimum number of " + minLessonStr + " lessons.");
+            System.out.println(maxLessonHolder + grammarInit(isPluralMaxHolders) + " the maximum number of " + maxLessonStr + " lessons.");
+        }
 
         float totalCharges = Float.parseFloat(booking1[4]) + Float.parseFloat(booking2[4]) + Float.parseFloat(booking3[4]);
         String totalChargesFormatted = String.format("%.2f", totalCharges);
@@ -144,7 +212,6 @@ public class Main {
 
         System.out.println("The average number of lessons per booking is: " + averageFormatted + " lessons.");
         System.out.println("The total charges collected is $" + totalChargesFormatted);
-
 
 //      thank you text
         System.out.println("");
@@ -209,5 +276,13 @@ public class Main {
     public static float calculateAverage(Float val1, Float val2, Float val3 ){
         float result = (val1 + val2 + val3) / MAX_Count;
         return  result;
+    }
+
+    public static String grammarInit(boolean value){
+        if (value){
+            return " have";
+        }else{
+            return " has";
+        }
     }
 }
