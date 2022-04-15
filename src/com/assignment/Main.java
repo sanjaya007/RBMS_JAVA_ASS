@@ -33,7 +33,7 @@ public class Main {
                 String bookingName = scanner.nextLine().trim();
                 if (isBlank(bookingName)) {
                     System.out.println("ERROR: Booking name cannot be blank.");
-                }else if (!isAlphabet(bookingName)){
+                }else if (isNumeric(bookingName)){
                     System.out.println("Error: Only alphabets are allowed.");
                 }else {
                     bookingArr[0] = bookingName;
